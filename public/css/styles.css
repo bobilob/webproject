@@ -1,0 +1,30 @@
+/* Reset some default browser styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #050937; /* Dark blue background */
+    color: #51c7a4; /* Light green text color */
+}
+
+header {
+    background: #f1475a; /* Red background */
+    color: #51c7a4;
+    padding: 10px 0;
+    text-align: center;
+}
+
+#linkList {
+    background-color: #ffffff; /* White background for links */
+    color: #000; /* Black text */
+}
+
+#contentBox {
+    background-color: #ececec; /* Light grey background */
+    color: #333; /* Dark grey text */
+}
