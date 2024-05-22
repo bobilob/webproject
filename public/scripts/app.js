@@ -2,31 +2,35 @@ window.onload = function() {
     const listContainer = document.getElementById('linkList');
     const contentBox = document.getElementById('contentBox');
 
-    function updateLinks() {
-        fetch('pages/')
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data, "text/html");
-                const files = Array.from(xmlDoc.querySelectorAll('a')).filter(file => file.href.endsWith('.txt'));
-                listContainer.innerHTML = '';
-                files.forEach(file => {
-                    const fileName = file.href.split('/').pop();
-                    const link = document.createElement('a');
-                    link.href = '#';
-                    link.textContent = fileName;
-                    link.onclick = function() {
-                        fetch('pages/' + fileName)
-                            .then(response => response.text())
-                            .then(text => contentBox.textContent = text);
-                        return false;
-                    };
-                    listContainer.appendChild(link);
-                    listContainer.appendChild(document.createElement('br'));
-                });
-            });
-    }
+    fetch('../pages/pages.json')  // Ensure the correct relative path
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const files = data.files;
 
-    updateLinks();
-    setInterval(updateLinks, 10000);
+            files.forEach(fileName => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = fileName;
+                link.onclick = function() {
+                    fetch('../pages/' + fileName)  // Ensure the correct relative path
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                        })
+                        .then(text => contentBox.textContent = text)
+                        .catch(error => contentBox.textContent = 'Error: ' + error.message);
+                    return false;
+                };
+                listContainer.appendChild(link);
+                listContainer.appendChild(document.createElement('br'));
+            });
+        })
+        .catch(error => contentBox.textContent = 'Error: ' + error.message);
 };
