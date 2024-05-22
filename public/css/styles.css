@@ -1,5 +1,5 @@
 /* Reset some default browser styles */
-body, h1, h2, p, ul, li {
+body, h1, p, ul, li {
     margin: 0;
     padding: 0;
 }
@@ -8,23 +8,32 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     padding: 20px;
-    background-color: #050937; /* Dark blue background */
-    color: #51c7a4; /* Light green text color */
+    background-color: #050937;
+    color: #51c7a4;
 }
 
 header {
-    background: #f1475a; /* Red background */
+    background: #f1475a;
     color: #51c7a4;
     padding: 10px 0;
     text-align: center;
 }
 
-#linkList {
-    background-color: #ffffff; /* White background for links */
-    color: #000; /* Black text */
+.sidebar {
+    background-color: #ffffff;
+    color: #000;
+    height: 600px;
+    overflow-y: auto;
+    float: left;
+    width: 30%;
 }
 
-#contentBox {
-    background-color: #ececec; /* Light grey background */
-    color: #333; /* Dark grey text */
+.content {
+    background-color: #ececec;
+    color: #333;
+    height: 600px;
+    border: 1px solid black;
+    margin-left: 30%;
+    padding: 10px;
+    overflow-y: auto;
 }

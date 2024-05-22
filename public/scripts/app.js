@@ -8,27 +8,25 @@ window.onload = function() {
             .then(data => {
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(data, "text/html");
-                const files = xmlDoc.querySelectorAll('a');
+                const files = Array.from(xmlDoc.querySelectorAll('a')).filter(file => file.href.endsWith('.txt'));
                 listContainer.innerHTML = '';
                 files.forEach(file => {
-                    if (file.href.endsWith('.txt')) {
-                        const fileName = file.textContent;
-                        const link = document.createElement('a');
-                        link.href = '#';
-                        link.textContent = fileName;
-                        link.onclick = function() {
-                            fetch('pages/' + fileName)
-                                .then(response => response.text())
-                                .then(text => contentBox.textContent = text);
-                            return false;
-                        };
-                        listContainer.appendChild(link);
-                        listContainer.appendChild(document.createElement('br'));
-                    }
+                    const fileName = file.href.split('/').pop();
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = fileName;
+                    link.onclick = function() {
+                        fetch('pages/' + fileName)
+                            .then(response => response.text())
+                            .then(text => contentBox.textContent = text);
+                        return false;
+                    };
+                    listContainer.appendChild(link);
+                    listContainer.appendChild(document.createElement('br'));
                 });
             });
     }
 
     updateLinks();
-    setInterval(updateLinks, 10000); // Optional: updates every 10 seconds
+    setInterval(updateLinks, 10000);
 };
